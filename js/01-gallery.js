@@ -7,28 +7,27 @@ const galleryMarkup = makeGalleryMarkup(galleryItems);
 galleryContainer.insertAdjacentHTML('beforeend', galleryMarkup);
 galleryContainer.addEventListener('click', openInstanceModal);
 
-function makeGalleryMarkup(pictures) {
+function makeGalleryMarkup(pictures) { //розмітка карточок
   return pictures
-    .map(({ preview, original, description }) => {
-      return `<div class="gallery__item">
-  <a class="gallery__link" href="${original}">
+      .map(({ preview, original, description }) => { //дестурктуризація
+        //шаблонні строки
+      return `<div class="gallery__item"> 
+  <a class="gallery__link" href="${original}"> 
     <img
       class="gallery__image"
       src="${preview}"
-      data-source="${original}"
+      data-source="${original}" 
       alt="${description}"
     />
   </a>
 </div>`;
     })
-      .join('');
+    .join('');
      
 }
 
-const instance = basicLightbox.create(
-  `
-      <img src="" />
-  `,
+const gallery = basicLightbox.create(
+  `<img src="" />`,
   {
     onShow: () => {
       console.log('add listener ');
@@ -43,12 +42,12 @@ const instance = basicLightbox.create(
 
 function escBtnHandler(e) {
   if (e.code === 'Escape') {
-    instance.close();
+    gallery.close();
   }
 }
 
 function openInstanceModal(e) {
   e.preventDefault();
-  instance.element().querySelector('img').src = e.target.dataset.source;
-  instance.show();
+  gallery.element().querySelector('img').src = e.target.dataset.source;
+  gallery.show();
 }
